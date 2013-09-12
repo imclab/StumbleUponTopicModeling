@@ -32,8 +32,8 @@ import cc.mallet.types.InstanceList;
 public class SUTopicModeler 
 {
 	private static final int NUM_THREADS = 4;
-	private static final int NUM_TOPICS = 100;
-	private static final int NUM_ITERATIONS = 50;
+	private static final int NUM_TOPICS = 120;
+	private static final int NUM_ITERATIONS = 2000;
 	private static InstanceList instances;
 	private static ParallelTopicModel model;
 	private static Alphabet dataAlphabet;
