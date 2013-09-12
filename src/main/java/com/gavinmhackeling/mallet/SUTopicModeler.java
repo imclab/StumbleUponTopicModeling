@@ -48,7 +48,7 @@ public class SUTopicModeler
 
 		loadModel();
 		createModel(args[0], args[1], args[2]);
-//		predict(args[3], args[4]);
+		predict(args[3], args[4]);
 
 		long duration = System.currentTimeMillis()-startTime;
 		System.out.println("Completed in " + duration + " milliseconds");
@@ -62,7 +62,6 @@ public class SUTopicModeler
 
 	private static void predict(String testSetFileName, String outReportFileName) throws IOException 
 	{
-		System.out.println("\n=====================================================\nPrediction for TEST:");
 		InstanceList testing = new InstanceList(instances.getPipe());
 		testing.addThruPipe(new SimpleFileLineIterator(new File(testSetFileName)));
 		TopicInferencer inferencer = model.getInferencer();
@@ -70,24 +69,12 @@ public class SUTopicModeler
 
 		for (int i=0; i<testing.size(); i++)
 		{
-			System.out.println("----------------------------------------------------------------\nTest Case: " + i);
 			double[] testProbabilities = inferencer.getSampledDistribution(testing.get(i), 10, 1, 5);
 			for (int j=0; j<testProbabilities.length; j++)
 			{
-				fileWriter.append(testProbabilities[j] + ",");
-				if (testProbabilities[j] > 0.2)
-				{
-					System.out.println("Topic: " + j + ": " + testProbabilities[j]);
-					Iterator<IDSorter> iterator = topicSortedWords.get(j).iterator();
-					int rank = 0;
-					while (iterator.hasNext() && rank < 10) {
-						IDSorter idCountPair = iterator.next();
-						System.out.print(dataAlphabet.lookupObject(idCountPair.getID()) + " ");
-						rank++;
-					}
-				}
+				fileWriter.append(String.valueOf(testProbabilities[j]));
+				if (j+1<testProbabilities.length) fileWriter.append(',');
 			}
-			System.out.println("\n----------------------------------------------------------------\n");
 			fileWriter.append('\n');
 		}
 		fileWriter.flush();
@@ -127,16 +114,13 @@ public class SUTopicModeler
 		{
 			Iterator<IDSorter> iterator = topicSortedWords.get(i).iterator();
 			int rank = 0;
-			System.out.print("Topic: " + i + ": ");
-			fileWriter.write("Topic: " + i);
+			fileWriter.write("Topic: " + i + ": ");
 			while (iterator.hasNext() && rank < 12) {
 				IDSorter idCountPair = iterator.next();
-				System.out.print(dataAlphabet.lookupObject(idCountPair.getID()) + " ");
 				fileWriter.write(dataAlphabet.lookupObject(idCountPair.getID()) + " ");
 				rank++;
 			}
 			fileWriter.write('\n');
-			System.out.println();
 		}
 		fileWriter.flush();
 		fileWriter.close();
