@@ -22,12 +22,11 @@ import cc.mallet.types.InstanceList;
 /**
  * @author ghackeling
  *
- * /media/Storage/workspace/topicmodeling/src/main/resources/full.corpus
- * /media/Storage/workspace/topicmodeling/src/main/resources/su.model
- * /media/Storage/workspace/topicmodeling/src/main/resources/topics
- * /media/Storage/workspace/topicmodeling/src/main/resources/test.corpus
- * /media/Storage/workspace/topicmodeling/src/main/resources/report.csv
- *
+ * args[0] training data name (full.corpus)
+ * args[1] output model name (su.model)
+ * args[2] output topics list name (topics)
+ * args[3] test data name (test.corpus)
+ * args[4] output vectors name (features.csv)
  */
 public class SUTopicModeler 
 {
